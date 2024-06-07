@@ -3,9 +3,9 @@ pipeline {
  
     environment {
         AWS_ACCOUNT_ID="979022608152"
-        AWS_DEFAULT_REGION="us-east-1"
-        BRANCH_NAME="megha_dev"
-        IMAGE_REPO_NAME="megha_landingpage"
+        AWS_DEFAULT_REGION="us-west-2"
+        BRANCH_NAME="main"
+        IMAGE_REPO_NAME="megha_real-estate"
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
     }
  
