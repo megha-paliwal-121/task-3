@@ -1,4 +1,4 @@
-FROM node:18
+FROM node
 WORKDIR /app
 COPY . .
 RUN npm install -g @angular/cli
