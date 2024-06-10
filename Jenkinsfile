@@ -27,8 +27,9 @@ pipeline {
             steps{
                 script {
                     env.git_commit_sha = sh(script: 'git rev-parse --short=6 HEAD', returnStdout: true).trim( )
-                    sh "docker build -t ${REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha} . -f frontend/Dockerfile"
-                    sh "docker build -t ${REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha} . -f backend-fastify/Dockerfile"
+                    sh "cd frontend/"
+                    sh "docker build -t ${REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha} . "
+                    //sh "docker build -t ${REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha} . -f backend-fastify/Dockerfile"
                 }
             }
         }
