@@ -52,7 +52,7 @@ pipeline {
             steps{
                 script {
                     
-                    sh "ssh  ubuntu@54.203.188.224 /home/ec2-user/login-ecr.sh"
+                    sh "ssh  ubuntu@54.203.188.224 /home/ubuntu/login-ecr.sh"
                     sh "ssh  ubuntu@54.203.188.224 sudo docker rm -f ${IMAGE_REPO_NAME}-${BRANCH_NAME} || true"
                     sh "ssh  ubuntu@54.203.188.224 sudo docker images -a -q | xargs docker rmi -f || true"
                     sh "ssh  ubuntu@54.203.188.224 sudo docker run -itd --name ${IMAGE_REPO_NAME}-${BRANCH_NAME} -p 4001:4200 --restart always ${REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha}"
