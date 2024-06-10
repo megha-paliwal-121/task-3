@@ -23,14 +23,17 @@ pipeline {
  
  
 // Building Docker images
-        stage('Building image of backend') {
+        stage('Building image ') {
             steps{
                 script {
                     dir('frontend'){
                     env.git_commit_sha = sh(script: 'git rev-parse --short=6 HEAD', returnStdout: true).trim( )
                     sh "docker build -t ${REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha} . "
                     }
-                    //sh "docker build -t ${REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha} . -f backend-fastify/Dockerfile"
+                    dir('backend-fastify'){
+                    env.git_commit_sha = sh(script: 'git rev-parse --short=6 HEAD', returnStdout: true).trim( )
+                    sh "docker build -t ${REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha} . "
+                    }
                 }
             }
         }
@@ -45,15 +48,15 @@ pipeline {
         }
  
 //Creating container
-        stage('creating container for ladingpage') {
+        stage('creating container for application') {
             steps{
                 script {
                     
-                    sh "ssh ec2-user@18.233.64.117 /home/ec2-user/login-ecr.sh"
-                    sh "ssh  ec2-user@18.233.64.117 sudo docker rm -f ${IMAGE_REPO_NAME}-${BRANCH_NAME} || true"
-                    sh "ssh  ec2-user@18.233.64.117 sudo docker images -a -q | xargs docker rmi -f || true"
-                    sh "ssh  ec2-user@18.233.64.117 sudo docker run -itd --name ${IMAGE_REPO_NAME}-${BRANCH_NAME} -p 9090:80 --restart always ${REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha}"
-
+                    sh "ssh  ubuntu@54.203.188.224 /home/ec2-user/login-ecr.sh"
+                    sh "ssh  ubuntu@54.203.188.224 sudo docker rm -f ${IMAGE_REPO_NAME}-${BRANCH_NAME} || true"
+                    sh "ssh  ubuntu@54.203.188.224 sudo docker images -a -q | xargs docker rmi -f || true"
+                    sh "ssh  ubuntu@54.203.188.224 sudo docker run -itd --name ${IMAGE_REPO_NAME}-${BRANCH_NAME} -p 4001:4200 --restart always ${REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha}"
+                    sh "ssh  ubuntu@54.203.188.224 sudo docker run -itd --name ${IMAGE_REPO_NAME}-${BRANCH_NAME} -p 4002:8000 --restart always ${REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha}"
 
  
                }
