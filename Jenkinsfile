@@ -26,9 +26,10 @@ pipeline {
         stage('Building image of backend') {
             steps{
                 script {
+                    dir('frontend'){
                     env.git_commit_sha = sh(script: 'git rev-parse --short=6 HEAD', returnStdout: true).trim( )
-                    sh "cd frontend/"
                     sh "docker build -t ${REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha} . "
+                    }
                     //sh "docker build -t ${REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha} . -f backend-fastify/Dockerfile"
                 }
             }
