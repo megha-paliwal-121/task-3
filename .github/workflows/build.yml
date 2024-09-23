@@ -16,6 +16,11 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      # Debugging Step: List the contents of the directory
+      - name: List Directory Contents
+        run: |
+          ls -R ./  # List files and directories recursively
+
       # Step 2: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -25,12 +30,12 @@ jobs:
       # Step 3: Install dependencies in the 'frontend' folder
       - name: Install Dependencies
         run: npm install
-        working-directory: ./task-3/frontend  # Correct usage of working-directory
+        working-directory: ./task-3/frontend  # Ensure this is the correct path
 
       # Step 4: Run tests (if any)
       - name: Run Tests
         run: npm test
-        working-directory: ./task-3/frontend  # Correct usage of working-directory
+        working-directory: ./task-3/frontend  # Ensure this is the correct path
 
   # SonarQube analysis job
   sonarqube:
