@@ -25,10 +25,12 @@ jobs:
       # Step 3: Install dependencies
       - name: Install Dependencies
         run: npm install
+        working-directory: ./task-3/frontend
 
       # Step 4: Run tests
       - name: Run Tests
         run: npm test
+        working-directory: ./task-3/frontend 
 
   # SonarQube analysis job
   sonarqube:
